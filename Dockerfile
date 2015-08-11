@@ -8,6 +8,7 @@ ENV ZCBUILDOUT 2.2.1
 ENV LC_HOME /opt/local_converters
 
 COPY src/start.sh           /usr/bin/start
+COPY src/configure.py       /configure.py
 COPY src/versions.cfg       $LC_HOME/
 COPY src/sources.cfg        $LC_HOME/
 COPY src/base.cfg           $LC_HOME/
