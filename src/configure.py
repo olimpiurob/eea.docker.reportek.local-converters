@@ -95,9 +95,9 @@ if sources:
 
 if configuration:
     header += """
-[instance]
+[gunicorn]
 """
 
 if extra_buildout_configuration or configuration or sources:
-    buildout = open("/opt/zope/buildout.cfg", "w")
+    buildout = open("/opt/local_converters/buildout.cfg", "w")
     print >> buildout, header + configuration,

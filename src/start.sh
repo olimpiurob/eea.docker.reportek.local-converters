@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _terminate() {
-  $LC_HOME/bin/instance stop
+  $LC_HOME/bin/reportek_converters stop
   kill -TERM $child 2>/dev/null
 }
 
@@ -23,8 +23,7 @@ fi
 
 chown -R 500:500 $LC_HOME/var $LC_HOME/parts
 
-$LC_HOME/bin/instance start
-$LC_HOME/bin/instance logtail &
+$LC_HOME/bin/reportek_converters start
 
 child=$!
 wait "$child"

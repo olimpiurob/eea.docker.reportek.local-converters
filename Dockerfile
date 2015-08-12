@@ -13,6 +13,7 @@ COPY src/versions.cfg       $LC_HOME/
 COPY src/sources.cfg        $LC_HOME/
 COPY src/base.cfg           $LC_HOME/
 COPY src/bootstrap.py       $LC_HOME/
+COPY src/converters.tpl     $LC_HOME/
 COPY src/install.sh         $LC_HOME/
 
 RUN mkdir -p $LC_HOME/var && \
@@ -21,6 +22,7 @@ RUN mkdir -p $LC_HOME/var && \
     chown -R 500:500 $LC_HOME
 
 WORKDIR $LC_HOME
+USER zope-www
 RUN ./install.sh
 VOLUME $LC_HOME/var/
 
