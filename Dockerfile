@@ -7,6 +7,10 @@ ENV SETUPTOOLS 7.0
 ENV ZCBUILDOUT 2.2.1
 ENV LC_HOME /opt/local_converters
 
+RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py"
+RUN python /tmp/get-pip.py
+RUN pip install scrubber
+
 COPY src/start.sh           /usr/bin/start
 COPY src/configure.py       /configure.py
 COPY src/versions.cfg       $LC_HOME/
