@@ -1,2 +1,10 @@
 python34
 python34-devel
+gdal-libs
+graphviz-devel
+ImageMagick
+libgsasl-devel
+mdbtools
+p7zip
+unrar
+unzip
