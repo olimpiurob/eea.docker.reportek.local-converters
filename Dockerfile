@@ -18,6 +18,7 @@ COPY src/configure.py              /configure.py
 COPY src/versions.cfg              $LC_HOME/
 COPY src/sources.cfg               $LC_HOME/
 COPY src/base.cfg                  $LC_HOME/
+COPY src/converters.cfg            $LC_HOME/
 COPY src/bootstrap.py              $LC_HOME/
 COPY src/converters.tpl            $LC_HOME/
 COPY src/chaperone.conf            /etc/chaperone.d/chaperone.conf
