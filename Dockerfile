@@ -11,7 +11,10 @@ RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
     python /tmp/get-pip.py && \
     pip install scrubber && \
     python3.4 /tmp/get-pip.py && \
-    pip3 install chaperone
+    pip3 install chaperone && \
+    rpm -ivh "http://pkgs.repoforge.org/unrar/unrar-5.0.3-1.el7.rf.x86_64.rpm" && \
+    rpm -ivh "http://pkgs.repoforge.org/wv/wv-1.2.4-1.el6.rf.x86_64.rpm"
+
 
 COPY src/docker-setup.sh           /docker-setup.sh
 COPY src/configure.py              /configure.py
