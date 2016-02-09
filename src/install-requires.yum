@@ -1,3 +1,4 @@
+csh
 gdal
 gdal-libs
 graphviz-devel
@@ -10,6 +11,7 @@ libjpeg-devel
 libpng-devel
 mdbtools
 p7zip
+perl-CGI
 python34
 python34-devel
 unzip
