@@ -3,8 +3,8 @@ MAINTAINER "Olimpiu Rob" <olimpiu.rob@eaudeweb.ro>
 
 ENV PYTHON python
 ENV CONFIG base.cfg
-ENV SETUPTOOLS 7.0
-ENV ZCBUILDOUT 2.2.1
+ENV SETUPTOOLS 28.6.0
+ENV ZCBUILDOUT 2.5.3
 ENV LC_HOME /opt/local_converters
 
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
@@ -12,10 +12,8 @@ RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
     pip install scrubber && \
     python3.4 /tmp/get-pip.py && \
     pip3 install chaperone && \
-    rpm -ivh "http://pkgs.repoforge.org/unrar/unrar-5.0.3-1.el7.rf.x86_64.rpm" && \
-    rpm -ivh "http://pkgs.repoforge.org/wv/wv-1.2.4-1.el6.rf.x86_64.rpm" && \
-    rpm -ivh "ftp://rpmfind.net/linux/sourceforge/x/xo/xoonips/[extras]%20xlhtml/xlhtml-0.5.1.p1/el6/xlhtml-0.5.1.p1-1.el6.x86_64.rpm"
-
+    rpm -ivh "ftp://fr2.rpmfind.net/linux/dag/redhat/el7/en/x86_64/dag/RPMS/unrar-5.0.3-1.el7.rf.x86_64.rpm" && \
+    rpm -ivh "ftp://fr2.rpmfind.net/linux/epel/6/x86_64/wv-1.2.7-2.el6.x86_64.rpm"
 
 COPY src/docker-setup.sh           /docker-setup.sh
 COPY src/configure.py              /configure.py
@@ -31,6 +29,11 @@ RUN groupadd -g 500 zope-www && \
     useradd  -g 500 -u 500 -m -s /bin/bash zope-www
 
 WORKDIR /var/local
+RUN curl -L "http://pkgs.fedoraproject.org/repo/extras/xlhtml/xlhtml-0.5.tgz/2ff805c5384bdde9675cb136f54df32e/xlhtml-0.5.tgz" -o "/var/local/xlhtml-0.5.tgz" && \
+    cd /var/local && tar -zxvf xlhtml-0.5.tgz && rm xlhtml-0.5.tgz && cd xlhtml-0.5 && \
+    curl -L "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" -o "config.sub" && \
+    ./configure && make && make install clean && cd /var/local && rm -rf xlhtml-05
+
 RUN curl "http://download.osgeo.org/geos/geos-3.3.8.tar.bz2" -o "/var/local/geos-3.3.8.tar.bz2" && \
     tar -jxvf geos-3.3.8.tar.bz2 && rm geos-3.3.8.tar.bz2 && \
     cd geos-3.3.8 && \
@@ -69,8 +72,6 @@ RUN $PYTHON bootstrap.py -v $ZCBUILDOUT --setuptools-version=$SETUPTOOLS -c $CON
     chown -R 500:500 $LC_HOME
 
 VOLUME $LC_HOME/var/
-
-USER zope-www
 
 ENTRYPOINT ["/usr/bin/chaperone"]
 CMD ["--user", "zope-www"]

@@ -8,23 +8,23 @@ fi
 echo "Using $CONFIG"
 echo ""
 #
-# Use setuptools version. Default: 7.0
+# Use setuptools version. Default: 28.6.0
 #
 if [ -z "$SETUPTOOLS" ]; then
   SETUPTOOLS=`cat versions.cfg | grep "setuptools\s*\=\s*" | sed 's/ *//g' | sed 's/=//g' | sed 's/[a-z]//g'`
   if [ -z "$SETUPTOOLS" ]; then
-    SETUPTOOLS="7.0"
+    SETUPTOOLS="28.6.0"
   fi
 fi
 echo "Using setuptools $SETUPTOOLS"
 echo ""
 #
-# Use zc.buildout version. Default: 2.2.1
+# Use zc.buildout version. Default: 2.5.3
 #
 if [ -z "$ZCBUILDOUT" ]; then
   ZCBUILDOUT=`cat versions.cfg | grep "zc\.buildout\s*=\s*" | sed 's/^.*\=\s*//g'`
   if [ -z "$ZCBUILDOUT" ]; then
-    ZCBUILDOUT="2.2.1"
+    ZCBUILDOUT="2.5.3"
   fi
 fi
 echo "Using zc.buildout $ZCBUILDOUT"
