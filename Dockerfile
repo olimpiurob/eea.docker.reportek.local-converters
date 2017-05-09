@@ -9,7 +9,7 @@ ENV LC_HOME /opt/local_converters
 
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
     python /tmp/get-pip.py && \
-    pip install scrubber && \
+    pip2 install scrubber path.py==9.1 dbf==0.96.8 enum34==1.1.6 && \
     python3.4 /tmp/get-pip.py && \
     pip3 install chaperone && \
     rpm -ivh "ftp://fr2.rpmfind.net/linux/dag/redhat/el7/en/x86_64/dag/RPMS/unrar-5.0.3-1.el7.rf.x86_64.rpm" && \
