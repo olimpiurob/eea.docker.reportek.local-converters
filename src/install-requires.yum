@@ -19,4 +19,5 @@ python34-devel
 sqlite
 sqlite-devel
 subversion
+texinfo-tex
 unzip

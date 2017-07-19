@@ -9,7 +9,7 @@ ENV LC_HOME /opt/local_converters
 
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
     python /tmp/get-pip.py && \
-    pip2 install scrubber path.py==9.1 dbf==0.96.8 enum34==1.1.6 && \
+    pip2 install scrubber path.py==9.1 dbf==0.96.8 enum34==1.1.6 Jinja2==2.9.6 && \
     python3.4 /tmp/get-pip.py && \
     pip3 install chaperone && \
     rpm -ivh "ftp://fr2.rpmfind.net/linux/dag/redhat/el7/en/x86_64/dag/RPMS/unrar-5.0.3-1.el7.rf.x86_64.rpm" && \
@@ -62,7 +62,12 @@ RUN curl -L "http://pkgs.fedoraproject.org/repo/extras/xlhtml/xlhtml-0.5.tgz/2ff
     cd /var/local && rm -rf spatialite-tools-4.1.0 && \
 
     svn co "https://svn.eionet.europa.eu/repositories/Reportnet/Dataflows/CDDA/2013/cdda-spatialite/" && \
-    chown -R 500:500 /var/local/cdda-spatialite
+    chown -R 500:500 /var/local/cdda-spatialite && \
+
+    curl "https://ayera.dl.sourceforge.net/project/gawkextlib/xgawk/xgawk-3.1.6-20080101/xgawk-3.1.6-20080101.tar.gz" -o "/var/local/xgawk-3.1.6-20080101.tar.gz" && \
+    cd /var/local && tar -zxvf xgawk-3.1.6-20080101.tar.gz && rm -f xgawk-3.1.6-20080101.tar.gz && cd xgawk-3.1.6-20080101 && \
+    ./configure --prefix=/usr && make && sed -i 's/\$\$p/\.libs\/\$\$p/g' extension/Makefile && make install clean && \
+    cd /var/local && rm -rf xgawk-3.1.6-2008010
 
 WORKDIR $LC_HOME
 

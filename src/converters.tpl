@@ -18,7 +18,7 @@ start_all() {
     if pid_exists $$PID_CONVERTERS; then
         echo "Converters not started"
     else
-        $$PREFIX/bin/gunicorn -b ${parts.gunicorn['address']}:${parts.gunicorn['port']} ${parts.gunicorn['app_module']} --timeout 300 -p $$PREFIX/var/converters.pid --chdir=${parts.buildout['eggs-directory']}/reportek.converters.egg/Products/reportek.converters/
+        $$PREFIX/bin/gunicorn -b ${parts.gunicorn['address']}:${parts.gunicorn['port']} ${parts.gunicorn['app_module']} --timeout 300 -p $$PREFIX/var/converters.pid --chdir=${parts.buildout.directory}/src/reportek.converters/Products/reportek.converters/
         echo "Converters started"
     fi
 }
