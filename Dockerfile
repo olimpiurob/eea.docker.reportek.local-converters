@@ -44,9 +44,9 @@ RUN curl -L "http://pkgs.fedoraproject.org/repo/extras/xlhtml/xlhtml-0.5.tgz/2ff
     cd /var/local && tar -zxvf proj-4.8.0.tar.gz && rm proj-4.8.0.tar.gz && cd proj-4.8.0 && \
     ./configure && make && make install clean && cd /var/local && rm -rf proj-4.8.0 && \
 
-    curl "http://www.gaia-gis.it/gaia-sins/freexl-1.0.2.tar.gz" -o "/var/local/freexl-1.0.2.tar.gz" && \
-    cd /var/local && tar -zxvf freexl-1.0.2.tar.gz && rm freexl-1.0.2.tar.gz && cd freexl-1.0.2 && \
-    ./configure && make && make install clean && cd /var/local && rm -rf freexl-1.0.2 && \
+    curl "http://www.gaia-gis.it/gaia-sins/freexl-1.0.3.tar.gz" -o "/var/local/freexl-1.0.3.tar.gz" && \
+    cd /var/local && tar -zxvf freexl-1.0.3.tar.gz && rm freexl-1.0.3.tar.gz && cd freexl-1.0.3 && \
+    ./configure && make && make install clean && cd /var/local && rm -rf freexl-1.0.3 && \
 
     curl "http://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-4.1.0.tar.gz" -o "/var/local/libspatialite-4.1.0.tar.gz" && \
     cd /var/local && tar -zxvf libspatialite-4.1.0.tar.gz && rm libspatialite-4.1.0.tar.gz && cd libspatialite-4.1.0 && \

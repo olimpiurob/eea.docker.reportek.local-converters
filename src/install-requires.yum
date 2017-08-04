@@ -1,12 +1,13 @@
+ImageMagick
+ImageMagick-devel
 bzip2
 csh
 freexl
 gdal
 gdal-libs
 graphviz-devel
-ImageMagick
-ImageMagick-devel
 java
+java-1.6.0-openjdk
 libgsasl-devel
 libgsf-devel
 libjpeg-devel
@@ -21,3 +22,4 @@ sqlite-devel
 subversion
 texinfo-tex
 unzip
+zip
