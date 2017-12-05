@@ -1,17 +1,15 @@
 FROM eeacms/centos:7s
-MAINTAINER "Olimpiu Rob" <olimpiu.rob@eaudeweb.ro>
+MAINTAINER "EEA: IDM2 C-TEAM" <eea-edw-c-team-alerts@googlegroups.com>
 
 ENV PYTHON python
 ENV CONFIG base.cfg
-ENV SETUPTOOLS 28.6.0
-ENV ZCBUILDOUT 2.5.3
+ENV SETUPTOOLS 33.1.1
+ENV ZCBUILDOUT 2.10.0
 ENV LC_HOME /opt/local_converters
 
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
     python /tmp/get-pip.py && \
     pip2 install scrubber path.py==9.1 dbf==0.96.8 enum34==1.1.6 Jinja2==2.9.6 && \
-    python3.4 /tmp/get-pip.py && \
-    pip3 install chaperone && \
     rpm -ivh "ftp://fr2.rpmfind.net/linux/dag/redhat/el7/en/x86_64/dag/RPMS/unrar-5.0.3-1.el7.rf.x86_64.rpm" && \
     rpm -ivh "ftp://fr2.rpmfind.net/linux/epel/6/x86_64/Packages/w/wv-1.2.7-2.el6.x86_64.rpm"
 
@@ -78,5 +76,5 @@ RUN $PYTHON bootstrap.py -v $ZCBUILDOUT --setuptools-version=$SETUPTOOLS -c $CON
 
 VOLUME $LC_HOME/var/
 
-ENTRYPOINT ["/usr/bin/chaperone"]
-CMD ["--user", "zope-www"]
+ENTRYPOINT ["/docker-setup.sh"]
+CMD []

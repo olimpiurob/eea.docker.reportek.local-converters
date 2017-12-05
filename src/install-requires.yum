@@ -15,8 +15,6 @@ libpng-devel
 mdbtools
 p7zip
 perl-CGI
-python34
-python34-devel
 sqlite
 sqlite-devel
 subversion
