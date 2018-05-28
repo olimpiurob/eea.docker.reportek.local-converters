@@ -1,4 +1,4 @@
-FROM eeacms/centos:7s
+FROM centos:7
 MAINTAINER "EEA: IDM2 C-TEAM" <eea-edw-c-team-alerts@googlegroups.com>
 
 ENV PYTHON python
@@ -7,11 +7,8 @@ ENV SETUPTOOLS 33.1.1
 ENV ZCBUILDOUT 2.10.0
 ENV LC_HOME /opt/local_converters
 
-RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
-    python /tmp/get-pip.py && \
-    pip2 install scrubber path.py==9.1 dbf==0.96.8 enum34==1.1.6 Jinja2==2.9.6 && \
-    rpm -ivh "ftp://fr2.rpmfind.net/linux/dag/redhat/el7/en/x86_64/dag/RPMS/unrar-5.0.3-1.el7.rf.x86_64.rpm" && \
-    rpm -ivh "ftp://fr2.rpmfind.net/linux/epel/6/x86_64/Packages/w/wv-1.2.7-2.el6.x86_64.rpm"
+ADD src/install-dependencies.sh /bin/install-dependencies
+ADD src/*.yum /etc/yum/
 
 COPY src/docker-setup.sh           \
      src/configure.py              /
@@ -21,13 +18,19 @@ COPY src/versions.cfg              \
      src/converters.cfg            \
      src/bootstrap.py              \
      src/converters.tpl            $LC_HOME/
-COPY src/chaperone.conf            /etc/chaperone.d/chaperone.conf
-
-RUN groupadd -g 500 zope-www && \
-    useradd  -g 500 -u 500 -m -s /bin/bash zope-www
 
 WORKDIR /var/local
-RUN curl -L "http://pkgs.fedoraproject.org/repo/extras/xlhtml/xlhtml-0.5.tgz/2ff805c5384bdde9675cb136f54df32e/xlhtml-0.5.tgz" -o "/var/local/xlhtml-0.5.tgz" && \
+RUN install-dependencies /etc/yum/ && \
+    curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
+        python /tmp/get-pip.py && \
+        pip2 install scrubber path.py==9.1 dbf==0.96.8 enum34==1.1.6 Jinja2==2.9.6 && \
+        rpm -ivh "ftp://fr2.rpmfind.net/linux/dag/redhat/el7/en/x86_64/dag/RPMS/unrar-5.0.3-1.el7.rf.x86_64.rpm" && \
+        rpm -ivh "ftp://fr2.rpmfind.net/linux/epel/6/x86_64/Packages/w/wv-1.2.7-2.el6.x86_64.rpm" && \
+    \
+    groupadd -g 500 zope-www && \
+    useradd  -g 500 -u 500 -m -s /bin/bash zope-www && \
+    \
+    curl -L "http://pkgs.fedoraproject.org/repo/extras/xlhtml/xlhtml-0.5.tgz/2ff805c5384bdde9675cb136f54df32e/xlhtml-0.5.tgz" -o "/var/local/xlhtml-0.5.tgz" && \
     cd /var/local && tar -zxvf xlhtml-0.5.tgz && rm xlhtml-0.5.tgz && cd xlhtml-0.5 && \
     curl -L "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" -o "config.sub" && \
     ./configure && make && make install clean && cd /var/local && rm -rf xlhtml-05 && \
@@ -42,9 +45,9 @@ RUN curl -L "http://pkgs.fedoraproject.org/repo/extras/xlhtml/xlhtml-0.5.tgz/2ff
     cd /var/local && tar -zxvf proj-4.8.0.tar.gz && rm proj-4.8.0.tar.gz && cd proj-4.8.0 && \
     ./configure && make && make install clean && cd /var/local && rm -rf proj-4.8.0 && \
     \
-    curl "http://www.gaia-gis.it/gaia-sins/freexl-1.0.4.tar.gz" -o "/var/local/freexl-1.0.4.tar.gz" && \
-    cd /var/local && tar -zxvf freexl-1.0.4.tar.gz && rm freexl-1.0.4.tar.gz && cd freexl-1.0.4 && \
-    ./configure && make && make install clean && cd /var/local && rm -rf freexl-1.0.4 && \
+    curl "http://www.gaia-gis.it/gaia-sins/freexl-1.0.5.tar.gz" -o "/var/local/freexl-1.0.5.tar.gz" && \
+    cd /var/local && tar -zxvf freexl-1.0.5.tar.gz && rm freexl-1.0.5.tar.gz && cd freexl-1.0.5 && \
+    ./configure && make && make install clean && cd /var/local && rm -rf freexl-1.0.5 && \
     \
     curl "http://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-4.1.0.tar.gz" -o "/var/local/libspatialite-4.1.0.tar.gz" && \
     cd /var/local && tar -zxvf libspatialite-4.1.0.tar.gz && rm libspatialite-4.1.0.tar.gz && cd libspatialite-4.1.0 && \
@@ -62,7 +65,7 @@ RUN curl -L "http://pkgs.fedoraproject.org/repo/extras/xlhtml/xlhtml-0.5.tgz/2ff
     svn co "https://svn.eionet.europa.eu/repositories/Reportnet/Dataflows/CDDA/2013/cdda-spatialite/" && \
     chown -R 500:500 /var/local/cdda-spatialite && \
     \
-    curl "https://ayera.dl.sourceforge.net/project/gawkextlib/xgawk/xgawk-3.1.6-20080101/xgawk-3.1.6-20080101.tar.gz" -o "/var/local/xgawk-3.1.6-20080101.tar.gz" && \
+    curl "https://master.dl.sourceforge.net/project/gawkextlib/xgawk/xgawk-3.1.6-20080101/xgawk-3.1.6-20080101.tar.gz" -o "/var/local/xgawk-3.1.6-20080101.tar.gz" && \
     cd /var/local && tar -zxvf xgawk-3.1.6-20080101.tar.gz && rm -f xgawk-3.1.6-20080101.tar.gz && cd xgawk-3.1.6-20080101 && \
     ./configure --prefix=/usr && make && sed -i 's/\$\$p/\.libs\/\$\$p/g' extension/Makefile && make install clean && \
     cd /var/local && rm -rf xgawk-3.1.6-2008010
