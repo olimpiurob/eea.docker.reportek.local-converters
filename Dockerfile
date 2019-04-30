@@ -79,7 +79,6 @@ RUN $PYTHON bootstrap.py -v $ZCBUILDOUT --setuptools-version=$SETUPTOOLS -c $CON
     yum clean all && \
     rm -rf /var/cache/yum
 
-# Install nc in the image, first
 HEALTHCHECK --interval=3m --timeout=5s --start-period=1m \
   CMD nc -z -w5 127.0.0.1 5000 || exit 1
 
