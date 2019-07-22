@@ -64,7 +64,7 @@ RUN install-dependencies /etc/yum/ && \
     svn co "https://svn.eionet.europa.eu/repositories/Reportnet/Dataflows/CDDA/2013/cdda-spatialite/" && \
     chown -R 500:500 /var/local/cdda-spatialite && \
     \
-    curl "https://master.dl.sourceforge.net/project/gawkextlib/xgawk/xgawk-3.1.6-20080101/xgawk-3.1.6-20080101.tar.gz" -o "/var/local/xgawk-3.1.6-20080101.tar.gz" && \
+    curl "http://dist.momonga-linux.org/pub/momonga/6.0/Everything/SOURCES/xgawk-3.1.6-20080101.tar.gz" -o "/var/local/xgawk-3.1.6-20080101.tar.gz" && \
     cd /var/local && tar -zxvf xgawk-3.1.6-20080101.tar.gz && rm -f xgawk-3.1.6-20080101.tar.gz && cd xgawk-3.1.6-20080101 && \
     ./configure --prefix=/usr && make && sed -i 's/\$\$p/\.libs\/\$\$p/g' extension/Makefile && make install clean && \
     cd /var/local && rm -rf xgawk-3.1.6-2008010
