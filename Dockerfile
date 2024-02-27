@@ -34,7 +34,12 @@ RUN yum update -y && yum install -y epel-release && yum install -y python27 && \
     cd /var/local && tar -zxvf xlhtml-0.5.tgz && rm xlhtml-0.5.tgz && cd xlhtml-0.5 && \
     curl -L "http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.sub" -o "config.sub" && \
     curl -L "http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.guess" -o "config.guess" && \
-    ./configure && make && make install clean && cd /var/local && rm -rf xlhtml-05
+    ./configure && make && make install clean && cd /var/local && rm -rf xlhtml-05 && \
+    curl -L "https://anduin.linuxfromscratch.org/BLFS/wv/wv-1.2.9.tar.gz" -o "/var/local/wv-1.2.9.tar.gz" && \
+    cd /var/local && tar -zxvf wv-1.2.9.tar.gz && rm wv-1.2.9.tar.gz && cd wv-1.2.9 && \
+    curl -L "http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.sub" -o "config.sub" && \
+    curl -L "http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.guess" -o "config.guess" && \
+    ./configure && make && make install clean && cd /var/local && rm -rf wv-1.2.9
 
 WORKDIR $LC_HOME
 
