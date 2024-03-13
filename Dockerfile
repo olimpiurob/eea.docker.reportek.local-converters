@@ -38,10 +38,13 @@ RUN yum update -y && yum install -y epel-release pip git && pip install zc.build
 WORKDIR $LC_HOME
 
 RUN buildout -c $CONFIG && \
+    cd src/scrubber && python setup.py install && \
     pip install -r $LC_HOME/src/reportek.converters/requirements.txt && \
     mkdir -p $LC_HOME/var && \
     chown -R 500:500 $LC_HOME && \
+    yum autoremove -y gcc gcc-c++ && \
     yum clean all && \
+    dnf clean all && \
     rm -rf /var/cache/yum && \
     rm -rf /var/cache/dnf
 
