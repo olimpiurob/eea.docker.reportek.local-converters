@@ -16,7 +16,7 @@ COPY src/versions.cfg             \
     src/converters.tpl            $LC_HOME/
 
 WORKDIR /var/local
-RUN yum update -y && yum install -y epel-release pip git && pip install zc.buildout beautifulsoup4 && \
+RUN yum update -y && yum install -y git epel-release && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 20 && \
     dnf -y update && dnf install -y epel-release && \
     dnf config-manager --set-enabled crb && \
@@ -27,8 +27,10 @@ RUN yum update -y && yum install -y epel-release pip git && pip install zc.build
     \
     groupadd -g 500 zope-www && \
     useradd  -g 500 -u 500 -m -s /bin/bash zope-www && \
-    pip install --upgrade pip setuptools && \
-    pip install zc.buildout && \
+    yum remove pip setuptools -y && \
+    python -m ensurepip --upgrade && python -m pip install -U pip && \
+    pip install zc.buildout beautifulsoup4 setuptools && \
+    pip install --upgrade setuptools && \
     curl -L "https://anduin.linuxfromscratch.org/BLFS/wv/wv-1.2.9.tar.gz" -o "/var/local/wv-1.2.9.tar.gz" && \
     cd /var/local && tar -zxvf wv-1.2.9.tar.gz && rm wv-1.2.9.tar.gz && cd wv-1.2.9 && \
     curl -L "http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.sub" -o "config.sub" && \
